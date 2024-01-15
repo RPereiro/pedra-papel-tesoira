@@ -49,6 +49,7 @@ def assess_game(user_action, computer_action):
             print("Scissors cuts paper. You won!")
             Resultado = game_result.Win
 
+    return Resultado 
 
 def get_computer_action():
     computer_selection = random.randint(0, len(GameAction) - 1)
@@ -83,8 +84,9 @@ def main():
             continue
 
         computer_action = get_computer_action()
-        assess_game(user_action, computer_action)
-        print(Resultado)
+        Resultado = assess_game(user_action, computer_action)
+        Resultado
+        
         if not play_another_round():
             break
 
