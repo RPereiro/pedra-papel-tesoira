@@ -14,7 +14,7 @@ class game_result(str):
     Win = 'Win'
     Lose = 'Lose'
 
-
+def probabilities (GameResult,user_action)
 
 def assess_game(user_action, computer_action):
 
@@ -90,6 +90,14 @@ def main():
         if not play_another_round():
             break
 
+list_of_probabilities = {
+      'afterwin': {'rock':0, 'paper':0, 'scissors':0},
+      'afterlose':{'rock':0, 'paper':0, 'scissors':0},
+      'afterdraw':{'rock':0, 'paper':0, 'scissors':0}
+      }
+
+last_two_user_actions = list()
 
 if __name__ == "__main__":
     main()
+
