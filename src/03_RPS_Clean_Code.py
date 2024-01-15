@@ -1,6 +1,7 @@
 import random
 from enum import IntEnum
 
+last_user_action = list()
 
 class GameAction(IntEnum):
 
@@ -14,7 +15,7 @@ class game_result(str):
     Win = 'Win'
     Lose = 'Lose'
 
-def probabilities (GameResult,user_action)
+
 
 def assess_game(user_action, computer_action):
 
@@ -86,7 +87,13 @@ def main():
         computer_action = get_computer_action()
         GameResult = assess_game(user_action, computer_action)
         GameResult
-        
+
+        last_user_action.append(GameResult)
+        if len(last_user_action) == 2 :
+            last_user_action[0]=last_user_action[1]
+            last_user_action.remove(1)
+        print(last_user_action)
+
         if not play_another_round():
             break
 
@@ -95,8 +102,6 @@ list_of_probabilities = {
       'afterlose':{'rock':0, 'paper':0, 'scissors':0},
       'afterdraw':{'rock':0, 'paper':0, 'scissors':0}
       }
-
-last_two_user_actions = list()
 
 if __name__ == "__main__":
     main()
