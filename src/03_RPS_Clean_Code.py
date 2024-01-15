@@ -20,36 +20,36 @@ def assess_game(user_action, computer_action):
 
     if user_action == computer_action:
         print(f"User and computer picked {user_action.name}. Draw game!")
-        Resultado = game_result.Draw
+        GameResult = game_result.Draw
 
     # You picked Rock
     elif user_action == GameAction.Rock:
         if computer_action == GameAction.Scissors:
             print("Rock smashes scissors. You won!")
-            Resultado = game_result.Win
+            GameResult = game_result.Win
         else:
             print("Paper covers rock. You lost!")
-            Resultado = game_result.Lose
+            GameResult = game_result.Lose
 
     # You picked Paper
     elif user_action == GameAction.Paper:
         if computer_action == GameAction.Rock:
             print("Paper covers rock. You won!")
-            Resultado = game_result.Win
+            GameResult = game_result.Win
         else:
             print("Scissors cuts paper. You lost!")
-            Resultado = game_result.Lose
+            GameResult = game_result.Lose
 
     # You picked Scissors
     elif user_action == GameAction.Scissors:
         if computer_action == GameAction.Rock:
             print("Rock smashes scissors. You lost!")
-            Resultado = game_result.Lose
+            GameResult = game_result.Lose
         else:
             print("Scissors cuts paper. You won!")
-            Resultado = game_result.Win
+            GameResult = game_result.Win
 
-    return Resultado 
+    return GameResult 
 
 def get_computer_action():
     computer_selection = random.randint(0, len(GameAction) - 1)
@@ -84,8 +84,8 @@ def main():
             continue
 
         computer_action = get_computer_action()
-        Resultado = assess_game(user_action, computer_action)
-        Resultado
+        GameResult = assess_game(user_action, computer_action)
+        GameResult
         
         if not play_another_round():
             break
