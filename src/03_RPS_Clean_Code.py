@@ -8,38 +8,52 @@ class GameAction(IntEnum):
     Paper = 1
     Scissors = 2
 
+class game_result(str):
+
+    Draw = 'Draw'
+    Win = 'Win'
+    Lose = 'Lose'
+
+
 
 def assess_game(user_action, computer_action):
+
     if user_action == computer_action:
         print(f"User and computer picked {user_action.name}. Draw game!")
+        Resultado = game_result.Draw
 
     # You picked Rock
     elif user_action == GameAction.Rock:
         if computer_action == GameAction.Scissors:
             print("Rock smashes scissors. You won!")
+            Resultado = game_result.Win
         else:
             print("Paper covers rock. You lost!")
+            Resultado = game_result.Lose
 
     # You picked Paper
     elif user_action == GameAction.Paper:
         if computer_action == GameAction.Rock:
             print("Paper covers rock. You won!")
+            Resultado = game_result.Win
         else:
             print("Scissors cuts paper. You lost!")
+            Resultado = game_result.Lose
 
     # You picked Scissors
     elif user_action == GameAction.Scissors:
         if computer_action == GameAction.Rock:
             print("Rock smashes scissors. You lost!")
+            Resultado = game_result.Lose
         else:
             print("Scissors cuts paper. You won!")
+            Resultado = game_result.Win
 
 
 def get_computer_action():
     computer_selection = random.randint(0, len(GameAction) - 1)
     computer_action = GameAction(computer_selection)
     print(f"Computer picked {computer_action.name}.")
-
     return computer_action
 
 
@@ -70,7 +84,7 @@ def main():
 
         computer_action = get_computer_action()
         assess_game(user_action, computer_action)
-
+        print(Resultado)
         if not play_another_round():
             break
 
