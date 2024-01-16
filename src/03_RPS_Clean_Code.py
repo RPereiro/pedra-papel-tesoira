@@ -18,7 +18,7 @@ afterscissors_probs = {
     }
 
 last_user_actions = list()
-LastGameResult = list()
+LastGamesResults = list()
 
 class GameAction(IntEnum):
 
@@ -85,7 +85,7 @@ def get_user_action():
 
 def probabilities ():
 
-    if LastGameResult == 'Draw':
+    if LastGamesResults[0] == 'Draw':
         number_draws = number_draws + 1
 
         if last_user_actions[0] == 'rock':
@@ -112,7 +112,7 @@ def probabilities ():
             elif last_user_actions[1] == 'scissors':
                 afterscissors_probs['after_draw']['scissors'] = afterscissors_probs['after_draw']['scissors'] + 1
 
-    if LastGameResult == 'Win':
+    if LastGamesResults[0] == 'Win':
         number_wins = number_wins + 1
 
         if last_user_actions[0] == 'rock':
@@ -139,7 +139,7 @@ def probabilities ():
             elif last_user_actions[1] == 'scissors':
                 afterscissors_probs['after_win']['scissors'] = afterscissors_probs['after_win']['scissors'] + 1
 
-    if LastGameResult == 'Lose':
+    if LastGamesResults[0] == 'Lose':
         number_loses = number_loses + 1
         
         if last_user_actions[0] == 'rock':
@@ -187,10 +187,10 @@ def main():
         GameResult = assess_game(user_action, computer_action)
         GameResult
 
-        LastGameResult.append(GameResult)
-        if len(LastGameResult) == 2 :
-            LastGameResult[0] = LastGameResult[1]
-            LastGameResult.remove(1)
+        LastGamesResults.append(GameResult)
+        if len(LastGamesResults) == 2 :
+            LastGamesResults[0] = LastGamesResults[1]
+            LastGamesResults.remove(1)
 
         last_user_actions.append(user_action)
         if len(last_user_actions) == 2 :
