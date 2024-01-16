@@ -1,7 +1,24 @@
 import random
 from enum import IntEnum
 
+afterrock_probs = {
+    'after_win':{'rock':0,'paper':0,'scissors':0},
+    'after_draw':{'rock':0,'paper':0,'scissors':0},
+    'after_lose':{'rock':0,'paper':0,'scissors':0}
+    }
+afterpaper_probs = {
+    'after_win':{'rock':0,'paper':0,'scissors':0},
+    'after_draw':{'rock':0,'paper':0,'scissors':0},
+    'after_lose':{'rock':0,'paper':0,'scissors':0} 
+    }
+afterscissors_probs = {
+    'after_win':{'rock':0,'paper':0,'scissors':0},
+    'after_draw':{'rock':0,'paper':0,'scissors':0},
+    'after_lose':{'rock':0,'paper':0,'scissors':0}
+    }
+
 last_user_actions = list()
+LastGameResult = list()
 
 class GameAction(IntEnum):
 
@@ -15,90 +32,6 @@ class game_result(str):
     Win = 'Win'
     Lose = 'Lose'
 
-def probabilities (GameResult,user_action):
-
-    if GameResult == 'Draw':
-        number_draws = number_draws + 1
-
-        if last_user_actions[0] == 'rock':
-            if last_user_actions[1] == 'rock':
-                afterrock_probs['after_draw']['rock'] = afterrock_probs['after_draw']['rock'] + 1
-            elif last_user_actions[1] == 'paper':
-                afterrock_probs['after_draw']['paper'] = afterrock_probs['after_draw']['paper'] + 1
-            elif last_user_actions[1] == 'scissors':
-                afterrock_probs['after_draw']['scissors'] = afterrock_probs['after_draw']['scissors'] + 1
-
-        elif last_user_actions[0] == 'paper':
-            if last_user_actions[1] == 'rock':
-                afterpaper_probs['after_draw']['rock'] = afterpaper_probs['after_draw']['rock'] + 1
-            elif last_user_actions[1] == 'paper':
-                afterpaper_probs['after_draw']['paper'] = afterpaper_probs['after_draw']['paper'] + 1
-            elif last_user_actions[1] == 'scissors':
-                afterpaper_probs['after_draw']['scissors'] = afterpaper_probs['after_draw']['scissors'] + 1
-
-        elif last_user_actions[0] == 'scissors':
-            if last_user_actions[1] == 'rock':
-                afterscissors_probs['after_draw']['rock'] = afterscissors_probs['after_draw']['rock'] + 1
-            elif last_user_actions[1] == 'paper':
-                afterscissors_probs['after_draw']['paper'] = afterscissors_probs['after_draw']['paper'] + 1
-            elif last_user_actions[1] == 'scissors':
-                afterscissors_probs['after_draw']['scissors'] = afterscissors_probs['after_draw']['scissors'] + 1
-
-        
-    if GameResult == 'Win':
-        number_wins = number_wins + 1
-
-        if last_user_actions[0] == 'rock':
-            if last_user_actions[1] == 'rock':
-                afterrock_probs['after_win']['rock'] = afterrock_probs['after_win']['rock'] + 1
-            elif last_user_actions[1] == 'paper':
-                afterrock_probs['after_win']['paper'] = afterrock_probs['after_win']['paper'] + 1
-            elif last_user_actions[1] == 'scissors':
-                afterrock_probs['after_win']['scissors'] = afterrock_probs['after_win']['scissors'] + 1
-
-        elif last_user_actions[0] == 'paper':
-            if last_user_actions[1] == 'rock':
-                afterpaper_probs['after_win']['rock'] = afterpaper_probs['after_win']['rock'] + 1
-            elif last_user_actions[1] == 'paper':
-                afterpaper_probs['after_win']['paper'] = afterpaper_probs['after_win']['paper'] + 1
-            elif last_user_actions[1] == 'scissors':
-                afterpaper_probs['after_win']['scissors'] = afterpaper_probs['after_win']['scissors'] + 1
-
-        elif last_user_actions[0] == 'scissors':
-            if last_user_actions[1] == 'rock':
-                afterscissors_probs['after_win']['rock'] = afterscissors_probs['after_win']['rock'] + 1
-            elif last_user_actions[1] == 'paper':
-                afterscissors_probs['after_win']['paper'] = afterscissors_probs['after_win']['paper'] + 1
-            elif last_user_actions[1] == 'scissors':
-                afterscissors_probs['after_win']['scissors'] = afterscissors_probs['after_win']['scissors'] + 1
-
-    if GameResult == 'Lose':
-        number_loses = number_loses + 1
-        
-        if last_user_actions[0] == 'rock':
-            if last_user_actions[1] == 'rock':
-                afterrock_probs['after_lose']['rock'] = afterrock_probs['after_lose']['rock'] + 1
-            elif last_user_actions[1] == 'paper':
-                afterrock_probs['after_lose']['paper'] = afterrock_probs['after_lose']['paper'] + 1
-            elif last_user_actions[1] == 'scissors':
-                afterrock_probs['after_lose']['scissors'] = afterrock_probs['after_lose']['scissors'] + 1
-
-        elif last_user_actions[0] == 'paper':
-            if last_user_actions[1] == 'rock':
-                afterpaper_probs['after_lose']['rock'] = afterpaper_probs['after_lose']['rock'] + 1
-            elif last_user_actions[1] == 'paper':
-                afterpaper_probs['after_lose']['paper'] = afterpaper_probs['after_lose']['paper'] + 1
-            elif last_user_actions[1] == 'scissors':
-                afterpaper_probs['after_lose']['scissors'] = afterpaper_probs['after_lose']['scissors'] + 1
-
-        elif last_user_actions[0] == 'scissors':
-            if last_user_actions[1] == 'rock':
-                afterscissors_probs['after_lose']['rock'] = afterscissors_probs['after_lose']['rock'] + 1
-            elif last_user_actions[1] == 'paper':
-                afterscissors_probs['after_lose']['paper'] = afterscissors_probs['after_lose']['paper'] + 1
-            elif last_user_actions[1] == 'scissors':
-                afterscissors_probs['after_lose']['scissors'] = afterscissors_probs['after_lose']['scissors'] + 1
-    
 
 def assess_game(user_action, computer_action):
 
@@ -141,7 +74,6 @@ def get_computer_action():
     print(f"Computer picked {computer_action.name}.")
     return computer_action
 
-
 def get_user_action():
     # Scalable to more options (beyond rock, paper and scissors...)
     game_choices = [f"{game_action.name}[{game_action.value}]" for game_action in GameAction]
@@ -151,10 +83,94 @@ def get_user_action():
 
     return user_action
 
+def probabilities ():
+
+    if LastGameResult == 'Draw':
+        number_draws = number_draws + 1
+
+        if last_user_actions[0] == 'rock':
+            if last_user_actions[1] == 'rock':
+                afterrock_probs['after_draw']['rock'] = afterrock_probs['after_draw']['rock'] + 1
+            elif last_user_actions[1] == 'paper':
+                afterrock_probs['after_draw']['paper'] = afterrock_probs['after_draw']['paper'] + 1
+            elif last_user_actions[1] == 'scissors':
+                afterrock_probs['after_draw']['scissors'] = afterrock_probs['after_draw']['scissors'] + 1
+
+        elif last_user_actions[0] == 'paper':
+            if last_user_actions[1] == 'rock':
+                afterpaper_probs['after_draw']['rock'] = afterpaper_probs['after_draw']['rock'] + 1
+            elif last_user_actions[1] == 'paper':
+                afterpaper_probs['after_draw']['paper'] = afterpaper_probs['after_draw']['paper'] + 1
+            elif last_user_actions[1] == 'scissors':
+                afterpaper_probs['after_draw']['scissors'] = afterpaper_probs['after_draw']['scissors'] + 1
+
+        elif last_user_actions[0] == 'scissors':
+            if last_user_actions[1] == 'rock':
+                afterscissors_probs['after_draw']['rock'] = afterscissors_probs['after_draw']['rock'] + 1
+            elif last_user_actions[1] == 'paper':
+                afterscissors_probs['after_draw']['paper'] = afterscissors_probs['after_draw']['paper'] + 1
+            elif last_user_actions[1] == 'scissors':
+                afterscissors_probs['after_draw']['scissors'] = afterscissors_probs['after_draw']['scissors'] + 1
+
+    if LastGameResult == 'Win':
+        number_wins = number_wins + 1
+
+        if last_user_actions[0] == 'rock':
+            if last_user_actions[1] == 'rock':
+                afterrock_probs['after_win']['rock'] = afterrock_probs['after_win']['rock'] + 1
+            elif last_user_actions[1] == 'paper':
+                afterrock_probs['after_win']['paper'] = afterrock_probs['after_win']['paper'] + 1
+            elif last_user_actions[1] == 'scissors':
+                afterrock_probs['after_win']['scissors'] = afterrock_probs['after_win']['scissors'] + 1
+
+        elif last_user_actions[0] == 'paper':
+            if last_user_actions[1] == 'rock':
+                afterpaper_probs['after_win']['rock'] = afterpaper_probs['after_win']['rock'] + 1
+            elif last_user_actions[1] == 'paper':
+                afterpaper_probs['after_win']['paper'] = afterpaper_probs['after_win']['paper'] + 1
+            elif last_user_actions[1] == 'scissors':
+                afterpaper_probs['after_win']['scissors'] = afterpaper_probs['after_win']['scissors'] + 1
+
+        elif last_user_actions[0] == 'scissors':
+            if last_user_actions[1] == 'rock':
+                afterscissors_probs['after_win']['rock'] = afterscissors_probs['after_win']['rock'] + 1
+            elif last_user_actions[1] == 'paper':
+                afterscissors_probs['after_win']['paper'] = afterscissors_probs['after_win']['paper'] + 1
+            elif last_user_actions[1] == 'scissors':
+                afterscissors_probs['after_win']['scissors'] = afterscissors_probs['after_win']['scissors'] + 1
+
+    if LastGameResult == 'Lose':
+        number_loses = number_loses + 1
+        
+        if last_user_actions[0] == 'rock':
+            if last_user_actions[1] == 'rock':
+                afterrock_probs['after_lose']['rock'] = afterrock_probs['after_lose']['rock'] + 1
+            elif last_user_actions[1] == 'paper':
+                afterrock_probs['after_lose']['paper'] = afterrock_probs['after_lose']['paper'] + 1
+            elif last_user_actions[1] == 'scissors':
+                afterrock_probs['after_lose']['scissors'] = afterrock_probs['after_lose']['scissors'] + 1
+
+        elif last_user_actions[0] == 'paper':
+            if last_user_actions[1] == 'rock':
+                afterpaper_probs['after_lose']['rock'] = afterpaper_probs['after_lose']['rock'] + 1
+            elif last_user_actions[1] == 'paper':
+                afterpaper_probs['after_lose']['paper'] = afterpaper_probs['after_lose']['paper'] + 1
+            elif last_user_actions[1] == 'scissors':
+                afterpaper_probs['after_lose']['scissors'] = afterpaper_probs['after_lose']['scissors'] + 1
+
+        elif last_user_actions[0] == 'scissors':
+            if last_user_actions[1] == 'rock':
+                afterscissors_probs['after_lose']['rock'] = afterscissors_probs['after_lose']['rock'] + 1
+            elif last_user_actions[1] == 'paper':
+                afterscissors_probs['after_lose']['paper'] = afterscissors_probs['after_lose']['paper'] + 1
+            elif last_user_actions[1] == 'scissors':
+                afterscissors_probs['after_lose']['scissors'] = afterscissors_probs['after_lose']['scissors'] + 1
+
 
 def play_another_round():
     another_round = input("\nAnother round? (y/n): ")
     return another_round.lower() == 'y'
+
 
 
 def main():
@@ -171,24 +187,23 @@ def main():
         GameResult = assess_game(user_action, computer_action)
         GameResult
 
+        LastGameResult.append(GameResult)
+        if len(LastGameResult) == 2 :
+            LastGameResult[0] = LastGameResult[1]
+            LastGameResult.remove(1)
+
         last_user_actions.append(user_action)
         if len(last_user_actions) == 2 :
-            last_user_actions[0]=last_user_actions[1]
+            last_user_actions[0] = last_user_actions[1]
             last_user_actions.remove(1)
-        print(last_user_actions)
+        
+        probabilities()
 
         if not play_another_round():
             break
 
-list_of_probabilities = {
-      'afterwin': {'rock':0, 'paper':0, 'scissors':0},
-      'afterlose':{'rock':0, 'paper':0, 'scissors':0},
-      'afterdraw':{'rock':0, 'paper':0, 'scissors':0}
-      }
 
 if __name__ == "__main__":
     main()
 
-afterrock_probs     = { 'after_win':{'rock':0,'paper':0,'scissors':0}, 'after_draw':{'rock':0,'paper':0,'scissors':0}, 'after_lose':{'rock':0,'paper':0,'scissors':0} }
-afterpaper_probs    = { 'after_win':{'rock':0,'paper':0,'scissors':0}, 'after_draw':{'rock':0,'paper':0,'scissors':0}, 'after_lose':{'rock':0,'paper':0,'scissors':0} }
-afterscissors_probs = { 'after_win':{'rock':0,'paper':0,'scissors':0}, 'after_draw':{'rock':0,'paper':0,'scissors':0}, 'after_lose':{'rock':0,'paper':0,'scissors':0} }
+
