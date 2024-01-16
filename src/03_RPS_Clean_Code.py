@@ -68,7 +68,7 @@ def assess_game(user_action, computer_action):
 
     return GameResult 
 
-def get_computer_action():
+def get_computer_action(): 
     computer_selection = random.randint(0, len(GameAction) - 1)
     computer_action = GameAction(computer_selection)
     print(f"Computer picked {computer_action.name}.")
