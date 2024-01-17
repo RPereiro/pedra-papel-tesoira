@@ -163,6 +163,8 @@ def probabilities ():
             elif last_user_actions[1] == 'scissors':
                 afterscissors_probs['after_lose']['scissors'][0] = afterscissors_probs['after_lose']['scissors'][0] + 1
 
+    afterrock_probs
+
 
 def play_another_round():
     another_round = input("\nAnother round? (y/n): ")
