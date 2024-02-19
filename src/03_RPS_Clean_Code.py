@@ -88,7 +88,7 @@ def probabilities (user_action,Stats):
 
     Stats['user_record'].append(user_action.name)
 
-    if Stats['total_games'] > 1 :
+    if Stats['total_games'] > 0 :
         last_user_action = Stats['user_record'][Stats['total_games']-1]
 
         if last_user_action == 'Rock':
@@ -100,16 +100,17 @@ def probabilities (user_action,Stats):
         if last_user_action == 'Scissors':
             Stats['after_scissors'][user_action.name][0] += 1
 
-    for after,i in zip(['after_rock','after_paper','after_scissors'],['Rock','Paper','Scissors']) :
-        total = (sum(Stats[after][i][0] for i in Stats[after]))
+    for z,i in zip(['after_rock','after_paper','after_scissors'],['Rock','Paper','Scissors']) :
+        total = (sum(Stats[z][i][0] for i in Stats[z]))
         print(i,total)
-        for i in ['Rock','Paper','Scissors'] :
+        for m in ['Rock','Paper','Scissors'] :
             if total > 0:
-                Stats[after][i][1] = ((Stats[after][i][1]*total) / 100) +
-            print(Stats[after][i][1])
-
+                Stats[z][m][1] =( Stats[z][m][0]/total)*100
+            print(Stats[z][m][1])
 
     Stats['total_games'] += 1
+    print(Stats)
+    
 
 
 
