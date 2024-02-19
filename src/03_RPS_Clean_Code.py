@@ -32,6 +32,11 @@ class game_result(str):
     Win = 'Win'
     Lose = 'Lose'
 
+class counter(str):
+    Scissors = 'Rock'
+    Rock = 'Paper'
+    Paper = 'Scissors'
+
 
 def assess_game(user_action, computer_action):
 
@@ -68,10 +73,31 @@ def assess_game(user_action, computer_action):
 
     return GameResult 
 
-def get_computer_action(): 
-    computer_selection = random.randint(0, len(GameAction) - 1)
-    computer_action = GameAction(computer_selection)
-    print(f"Computer picked {computer_action.name}.")
+def get_computer_action(Stats): 
+    #computer_selection = random.randint(0, len(GameAction) - 1)
+    if Stats['total_games'] > 0:
+        last_user_action = Stats['user_record'][Stats['total_games']-1]
+
+        if last_user_action == 'Rock':
+            #after_rock_max_value = max(value[1] for value in Stats['after_rock'].values())
+            after_rock_max_key = max(Stats['after_rock'].items(), key=lambda x: x[1][1])[0]
+            computer_selection = counter.after_rock_max_key
+            computer_action = GameAction.computer_selection
+            print(after_rock_max_key)
+
+        if last_user_action == 'Paper':
+            #after_paper_max_value = max(value[1] for value in Stats['after_paper'].values())
+            after_paper_max_key = max(Stats['after_paper'].items(), key=lambda x: x[1][1])[0]
+            computer_action = counter.after_paper_max_key
+            print(after_paper_max_key)
+            
+        if last_user_action == 'Scissors':
+            after_scissors_max_key = max(Stats['after_scissors'].items(), key=lambda x: x[1][1])[0]
+            computer_action = counter.after_scissors_max_key
+            print(after_scissors_max_key)
+    else:
+        computer_action = random.choice(GameAction)
+    print(f"Computer picked {computer_action}.")
     return computer_action
 
 def get_user_action():
@@ -100,16 +126,14 @@ def probabilities (user_action,Stats):
         if last_user_action == 'Scissors':
             Stats['after_scissors'][user_action.name][0] += 1
 
-    for z,i in zip(['after_rock','after_paper','after_scissors'],['Rock','Paper','Scissors']) :
-        total = (sum(Stats[z][i][0] for i in Stats[z]))
-        print(i,total)
-        for m in ['Rock','Paper','Scissors'] :
+    for last,choice in zip(['after_rock','after_paper','after_scissors'],['Rock','Paper','Scissors']) :
+        total = (sum(Stats[last][choice][0] for choice in Stats[last]))
+        for choice2 in ['Rock','Paper','Scissors'] :
             if total > 0:
-                Stats[z][m][1] =( Stats[z][m][0]/total)*100
-            print(Stats[z][m][1])
+                Stats[last][choice2][1] = (Stats[last][choice2][0]/total)*100
 
     Stats['total_games'] += 1
-    print(Stats)
+
     
 
 
@@ -131,11 +155,12 @@ def main():
             range_str = f"[0, {len(GameAction) - 1}]"
             print(f"Invalid selection. Pick a choice in range {range_str}!")
             continue
-
-        computer_action = get_computer_action()
+        
+        probabilities(user_action,Stats)
+        computer_action = get_computer_action(Stats)
         GameResult = assess_game(user_action, computer_action)
         GameResult
-        probabilities(user_action,Stats)
+        
         if not play_another_round():
             break
 
