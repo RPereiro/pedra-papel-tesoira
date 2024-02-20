@@ -15,7 +15,9 @@ Stats = {
                       'Scissors':[0,33.33]},
     
     'user_record' : [],
-    'total_games' : 0
+    'total_games' : 0,
+    'computer_wins' : 0,
+    'efficiency' : 0.00
 
     }
 
@@ -42,7 +44,7 @@ def counter(computer_selection):
 
 
 
-def assess_game(user_action, computer_action,):
+def assess_game(user_action, computer_action,Stats):
 
     if user_action == computer_action:
         print(f"User and computer picked {user_action.name}. Draw game!")
@@ -74,6 +76,10 @@ def assess_game(user_action, computer_action,):
         else:
             print("Scissors cuts paper. You won!")
             GameResult = game_result.Win
+
+    if GameResult == game_result.Lose:
+        Stats['computer_wins'] += 1
+    Stats['efficiency'] = (Stats['computer_wins'] / Stats['total_games']) * 100
 
     return GameResult 
 
@@ -135,6 +141,8 @@ def probabilities (user_action,Stats):
                 Stats[last][choice2][1] = (Stats[last][choice2][0]/total)*100
 
     Stats['total_games'] += 1
+    
+
             
 
 def play_another_round():
@@ -157,9 +165,9 @@ def main():
 
         probabilities(user_action,Stats)
         print('U chose',user_action.name ,'and computer chose ',computer_action.name)
-        GameResult = assess_game(user_action, computer_action)
+        GameResult = assess_game(user_action, computer_action,Stats)
         GameResult
-        
+        print(Stats)
         if not play_another_round():
             break
 
