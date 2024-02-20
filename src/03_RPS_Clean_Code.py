@@ -33,9 +33,9 @@ class game_result(str):
     Lose = 'Lose'
 
 class counter(str):
-    Scissors = 'Rock'
-    Rock = 'Paper'
-    Paper = 'Scissors'
+    Paper = 'Rock'
+    Scissors = 'Paper'
+    Rock = 'Scissors'
 
 
 def assess_game(user_action, computer_action):
@@ -77,23 +77,32 @@ def get_computer_action(Stats):
     #computer_selection = random.randint(0, len(GameAction) - 1)
     if Stats['total_games'] > 0:
         last_user_action = Stats['user_record'][Stats['total_games']-1]
+        
+    if Stats['total_games'] > 1:
+        
+        print('last game was: ',last_user_action)
 
         if last_user_action == 'Rock':
+            print('afterrock')
             after_rock_max_key = max(Stats['after_rock'].items(), key=lambda x: x[1][1])[0]
             computer_action = after_rock_max_key
             print(after_rock_max_key)
 
         elif last_user_action == 'Paper':
+            print('afterpaper')
             after_paper_max_key = max(Stats['after_paper'].items(), key=lambda x: x[1][1])[0]
             computer_action = after_paper_max_key
             print(after_paper_max_key)
             
         elif last_user_action == 'Scissors':
+            print('afterscissors')
             after_scissors_max_key = max(Stats['after_scissors'].items(), key=lambda x: x[1][1])[0]
             computer_action = after_scissors_max_key
+            #print(counter(str(after_scissors_max_key)))
             print(after_scissors_max_key)
     else:
-        computer_action = random.choice(GameAction)
+        computer_selection = random.randint(0, len(GameAction) - 1)
+        computer_action = GameAction(computer_selection).name
     print(f"Computer picked {computer_action}.")
     return computer_action
 
@@ -152,12 +161,17 @@ def main():
             range_str = f"[0, {len(GameAction) - 1}]"
             print(f"Invalid selection. Pick a choice in range {range_str}!")
             continue
-        
-        probabilities(user_action,Stats)
+
+        print(Stats)
         computer_action = get_computer_action(Stats)
+
+        probabilities(user_action,Stats)
+        print(Stats)
+
+        print('u chose',user_action.name ,'and computer chose ',computer_action)
+
         GameResult = assess_game(user_action, computer_action)
         GameResult
-        print(Stats)
         
         if not play_another_round():
             break
