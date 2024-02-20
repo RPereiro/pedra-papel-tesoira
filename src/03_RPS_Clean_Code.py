@@ -39,6 +39,8 @@ class counter(str):
 
 
 def assess_game(user_action, computer_action):
+    print('user action',user_action)
+    print('computer action',computer_action)
 
     if user_action == computer_action:
         print(f"User and computer picked {user_action.name}. Draw game!")
@@ -74,10 +76,10 @@ def assess_game(user_action, computer_action):
     return GameResult 
 
 def get_computer_action(Stats): 
-    #computer_selection = random.randint(0, len(GameAction) - 1)
+
     if Stats['total_games'] > 0:
         last_user_action = Stats['user_record'][Stats['total_games']-1]
-        
+
     if Stats['total_games'] > 1:
         
         print('last game was: ',last_user_action)
@@ -85,25 +87,24 @@ def get_computer_action(Stats):
         if last_user_action == 'Rock':
             print('afterrock')
             after_rock_max_key = max(Stats['after_rock'].items(), key=lambda x: x[1][1])[0]
-            computer_action = after_rock_max_key
+            computer_action = GameAction[after_rock_max_key]
             print(after_rock_max_key)
 
         elif last_user_action == 'Paper':
             print('afterpaper')
             after_paper_max_key = max(Stats['after_paper'].items(), key=lambda x: x[1][1])[0]
-            computer_action = after_paper_max_key
+            computer_action = GameAction[after_paper_max_key]
             print(after_paper_max_key)
             
         elif last_user_action == 'Scissors':
             print('afterscissors')
             after_scissors_max_key = max(Stats['after_scissors'].items(), key=lambda x: x[1][1])[0]
-            computer_action = after_scissors_max_key
-            #print(counter(str(after_scissors_max_key)))
+            computer_action = GameAction[after_scissors_max_key]
             print(after_scissors_max_key)
     else:
         computer_selection = random.randint(0, len(GameAction) - 1)
-        computer_action = GameAction(computer_selection).name
-    print(f"Computer picked {computer_action}.")
+        computer_action = GameAction(computer_selection)
+    print(f"Computer picked {computer_action.name}.")
     return computer_action
 
 def get_user_action():
