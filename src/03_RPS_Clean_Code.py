@@ -167,10 +167,7 @@ def main():
         computer_action = get_computer_action(Stats)
 
         probabilities(user_action,Stats)
-        print(Stats)
-
-        print('u chose',user_action.name ,'and computer chose ',computer_action)
-
+        print('u chose',user_action.name ,'and computer chose ',computer_action.name)
         GameResult = assess_game(user_action, computer_action)
         GameResult
         
