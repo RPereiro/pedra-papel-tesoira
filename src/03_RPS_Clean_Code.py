@@ -79,21 +79,18 @@ def get_computer_action(Stats):
         last_user_action = Stats['user_record'][Stats['total_games']-1]
 
         if last_user_action == 'Rock':
-            #after_rock_max_value = max(value[1] for value in Stats['after_rock'].values())
             after_rock_max_key = max(Stats['after_rock'].items(), key=lambda x: x[1][1])[0]
-            computer_selection = counter.after_rock_max_key
-            computer_action = GameAction.computer_selection
+            computer_action = after_rock_max_key
             print(after_rock_max_key)
 
-        if last_user_action == 'Paper':
-            #after_paper_max_value = max(value[1] for value in Stats['after_paper'].values())
+        elif last_user_action == 'Paper':
             after_paper_max_key = max(Stats['after_paper'].items(), key=lambda x: x[1][1])[0]
-            computer_action = counter.after_paper_max_key
+            computer_action = after_paper_max_key
             print(after_paper_max_key)
             
-        if last_user_action == 'Scissors':
+        elif last_user_action == 'Scissors':
             after_scissors_max_key = max(Stats['after_scissors'].items(), key=lambda x: x[1][1])[0]
-            computer_action = counter.after_scissors_max_key
+            computer_action = after_scissors_max_key
             print(after_scissors_max_key)
     else:
         computer_action = random.choice(GameAction)
@@ -160,6 +157,7 @@ def main():
         computer_action = get_computer_action(Stats)
         GameResult = assess_game(user_action, computer_action)
         GameResult
+        print(Stats)
         
         if not play_another_round():
             break
