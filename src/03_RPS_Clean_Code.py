@@ -39,8 +39,6 @@ class counter(str):
 
 
 def assess_game(user_action, computer_action):
-    print('user action',user_action)
-    print('computer action',computer_action)
 
     if user_action == computer_action:
         print(f"User and computer picked {user_action.name}. Draw game!")
@@ -81,14 +79,16 @@ def get_computer_action(Stats):
         last_user_action = Stats['user_record'][Stats['total_games']-1]
 
     if Stats['total_games'] > 1:
-        
-        print('last game was: ',last_user_action)
 
         if last_user_action == 'Rock':
             print('afterrock')
             after_rock_max_key = max(Stats['after_rock'].items(), key=lambda x: x[1][1])[0]
             computer_action = GameAction[after_rock_max_key]
             print(after_rock_max_key)
+            print(counter(computer_action))
+            print(counter[computer_action])
+            print(counter(after_rock_max_key))
+            print(counter[after_rock_max_key])
 
         elif last_user_action == 'Paper':
             print('afterpaper')
@@ -140,11 +140,6 @@ def probabilities (user_action,Stats):
                 Stats[last][choice2][1] = (Stats[last][choice2][0]/total)*100
 
     Stats['total_games'] += 1
-
-    
-
-
-
             
 
 def play_another_round():
@@ -163,11 +158,10 @@ def main():
             print(f"Invalid selection. Pick a choice in range {range_str}!")
             continue
 
-        print(Stats)
         computer_action = get_computer_action(Stats)
 
         probabilities(user_action,Stats)
-        print('u chose',user_action.name ,'and computer chose ',computer_action.name)
+        print('U chose',user_action.name ,'and computer chose ',computer_action.name)
         GameResult = assess_game(user_action, computer_action)
         GameResult
         
